@@ -156,10 +156,6 @@ class BluetoothControlViewModel : ViewModel(), BluetoothProfile.ServiceListener,
         }
     }
 
-    private fun manageMySocket(blSocket: BluetoothSocket) {
-
-    }
-
     @OnLifecycleEvent(value = Lifecycle.Event.ON_RESUME)
     fun register() {
         mHidDevice?.run {
@@ -173,12 +169,7 @@ class BluetoothControlViewModel : ViewModel(), BluetoothProfile.ServiceListener,
     fun tryConnectDfBl() {
         val lastAddr = SpHelper.getString(LAST_CONTROL)
         if (!TextUtils.isEmpty(lastAddr)){
-            for (device in blAdapter.bondedDevices){
-                if (device.address==lastAddr){
-                    connectBl(device)
-                    break
-                }
-            }
+            connectBl(blAdapter.getRemoteDevice(lastAddr))
         }
     }
 }

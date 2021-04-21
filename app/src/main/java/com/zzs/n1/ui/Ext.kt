@@ -9,6 +9,7 @@ import com.zzs.n1.utils.showToast
 import com.zzs.n1.widget.LoadingDialog
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 /**
 @author  zzs
@@ -44,13 +45,15 @@ fun Fragment.hideLoading(){
     dialog?.dismiss()
 }
 
-fun ViewModel.launchIO(bl:()->Unit){
+fun ViewModel.launchIO(bl:suspend ()->Unit){
     viewModelScope.launch(Dispatchers.IO){
         kotlin.runCatching {
 
             bl.invoke()
         }.onFailure {
-            showToast(it.message?:"")
+            withContext(Dispatchers.Main){
+                showToast("网络异常 ${it.message}")
+            }
         }
 
     }

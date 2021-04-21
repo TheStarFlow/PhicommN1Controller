@@ -1,3 +1,2 @@
-include ':library_network'
 include ':app'
 rootProject.name = "PhicommN1Controller"

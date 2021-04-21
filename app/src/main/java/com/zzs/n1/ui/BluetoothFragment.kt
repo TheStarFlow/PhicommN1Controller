@@ -78,7 +78,7 @@ class BluetoothFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        binding.deviceList.setOnClickListener {
+        binding.setIp.setOnClickListener {
             if (listDialog == null) {
                 listDialog = BlueDeviceListDialog.newInstance()
                 listDialog?.dialog?.setOnDismissListener {
@@ -100,9 +100,12 @@ class BluetoothFragment : Fragment() {
                 0->{
                     showLoading("正在连接...")
                 }
+                1->{
+                    showToast("Hid 设备注册成功")
+                }
                 2->{
                     hideLoading()
-                    showToast("连接失败~")
+                    showToast("Hid 设备无法注册")
                 }
             }
 
@@ -117,7 +120,6 @@ class BluetoothFragment : Fragment() {
             }
         })
         register()
-        Log.d("UUID","${UUID.randomUUID()}")
     }
 
     private fun pair(it: BluetoothDevice) {
