@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+        <import type="com.zzs.n1.WifiControlViewModel"/>
+        <variable
+            name="model"
+            type="WifiControlViewModel" />
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/gray"
+            android:text="@{model.state}"
+            android:textStyle="bold"
+            android:textSize="20sp"
+            android:id="@+id/tvState"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="24dp"
+            />
+
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_mute"
+            app:layout_constraintBottom_toBottomOf="@id/screenShot"
+            app:layout_constraintStart_toEndOf="@id/screenShot"
+            app:layout_constraintEnd_toStartOf="@id/device_list"
+            android:onClick="@{()->model.onMute()}"
+            android:id="@+id/mute"/>
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_screenshot_line"
+            android:id="@+id/screenShot"
+            app:layout_constraintBottom_toTopOf="@id/cMenu"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/mute"
+            android:onClick="@{()->model.onScreenShot()}"
+            android:layout_marginBottom="36dp"/>
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_list"
+            app:layout_constraintBottom_toBottomOf="@id/screenShot"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/mute"
+            android:id="@+id/device_list"
+            />
+
+        <com.dlong.rep.dlroundmenuview.DLRoundMenuView
+            android:id="@+id/cMenu"
+            android:layout_width="250dp"
+            android:layout_height="250dp"
+            android:layout_marginBottom="20dp"
+            app:RMHasCoreMenu="true"
+            app:RMRoundMenuStrokeSize="2dp"
+            app:RMCoreMenuStrokeSize = "2dp"
+            app:layout_constraintBottom_toTopOf="@id/imgBack"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <ImageView
+            android:id="@+id/imgBack"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="32dp"
+            android:onClick="@{()->model.onBack()}"
+            android:padding="12dp"
+            android:src="@drawable/ic_back_normal"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <ImageView
+            android:id="@+id/vDown"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="12dp"
+            app:layout_constraintTop_toTopOf="@id/imgBack"
+            android:src="@drawable/ic_volume_down"
+            app:layout_constraintBottom_toBottomOf="@id/imgBack"
+            app:layout_constraintEnd_toStartOf="@id/imgBack"
+            app:layout_constraintStart_toStartOf="parent"
+            android:onClick="@{()->model.onVDown()}"
+            />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="12dp"
+            app:layout_constraintTop_toTopOf="@id/imgBack"
+            android:src="@drawable/ic_volume_up_normal"
+            app:layout_constraintBottom_toBottomOf="@id/imgBack"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/imgBack"
+            android:onClick="@{()->model.onVUp()}"
+            />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
