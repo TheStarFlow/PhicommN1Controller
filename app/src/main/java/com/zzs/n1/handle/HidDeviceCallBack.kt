@@ -45,13 +45,14 @@ class HidDeviceCallBack(val mHidDevice: BluetoothHidDevice, val mState: StateRep
             mCurrentBatteryLevel = mBatteryLevel
             if (device != mPluginDevice) {
                 mPluginDevice = device
+                initWrapper()
                 mMouseWrapper?.mPluginDevice = mPluginDevice
                 mKeyBoardWrapper?.mPluginDevice = mPluginDevice
                 mMouseWrapper?.mPluginDevice = mPluginDevice
             }
             mState.onReportState(mPluginDevice?.name ?: "匿名设备")
         } else {
-            DataWrapper.mConnectState = BluetoothHidDevice.PROTOCOL_REPORT_MODE.toInt()
+            DataWrapper.mProtocol = BluetoothHidDevice.PROTOCOL_REPORT_MODE
             mState.onReportState("连接失败~")
         }
     }

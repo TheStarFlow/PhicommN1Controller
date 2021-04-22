@@ -105,7 +105,9 @@ class BluetoothFragment : Fragment() {
                 }
                 2->{
                     hideLoading()
-                    showToast("Hid 设备无法注册")
+                    if (!requireActivity().isFinishing){
+                        showToast("Hid 设备无法注册")
+                    }
                 }
             }
 
@@ -125,7 +127,6 @@ class BluetoothFragment : Fragment() {
     private fun pair(it: BluetoothDevice) {
         val state = it.bondState
         if (state==BluetoothDevice.BOND_BONDED){
-            showToast("该设备已配对")
             connectBl(it)
             return
         }else{

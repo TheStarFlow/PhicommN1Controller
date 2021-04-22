@@ -22,7 +22,8 @@
             android:id="@+id/deviceName"
             android:drawablePadding="10dp"
             android:drawableStart="@drawable/ic_bluetooth"
-            android:paddingBottom="10dp"/>
+            android:paddingBottom="10dp"
+            />
 
     </FrameLayout>
 </layout>

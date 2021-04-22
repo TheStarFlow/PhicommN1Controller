@@ -5,9 +5,10 @@ import android.content.Context
 import android.text.TextUtils
 import android.util.Log
 import androidx.lifecycle.*
+import com.zzs.n1.WifiControlViewModel.Companion.LAST_IP
+import com.zzs.n1.bean.NetBean
 import com.zzs.n1.handle.HidDeviceHandler
-import com.zzs.n1.ui.BluetoothFragment
-import com.zzs.n1.ui.launchIO
+import com.zzs.n1.ui.*
 import com.zzs.n1.utils.SpHelper
 import com.zzs.n1.utils.showToast
 import kotlinx.coroutines.delay
@@ -46,6 +47,27 @@ class BluetoothControlViewModel : ViewModel(), BluetoothProfile.ServiceListener,
     private var mHidHandler: HidDeviceHandler? = null
 
     val device = MutableLiveData<BluetoothDevice>()
+
+
+    fun power(){
+        //关机
+        val ip = SpHelper.getString(LAST_IP)
+        if (!TextUtils.isEmpty(ip)){
+            val url = getUrl(ip!!, WifiControlViewModel.KEY_EVENT)
+            val json = NetBean(26).toString()
+            httpPost(url,json){ log(it)}
+        }
+
+        //开机
+        val lastDeviceAddress = SpHelper.getString(LAST_CONTROL)
+        if (TextUtils.isEmpty(lastDeviceAddress))return
+        val bl = blAdapter.getRemoteDevice(lastDeviceAddress)
+        val gatt = bl?.connectGatt(App.application,false,object : BluetoothGattCallback() {})
+        gatt?.close()
+
+
+
+    }
 
     fun onMute() {
         val code = 0x84.toByte()

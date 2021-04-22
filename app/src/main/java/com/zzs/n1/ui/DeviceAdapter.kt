@@ -2,6 +2,8 @@ package com.zzs.n1.ui
 
 import android.annotation.SuppressLint
 import android.bluetooth.BluetoothDevice
+import android.content.res.ColorStateList
+import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
@@ -34,9 +36,14 @@ class DeviceAdapter(private val data: MutableList<BluetoothDevice>, private val 
         return holder
     }
 
-    @SuppressLint("SetTextI18n")
+    @SuppressLint("SetTextI18n", "UseCompatTextViewDrawableApis")
     override fun onBindViewHolder(holder: DViewHolder, position: Int) {
         holder.binding.deviceName.text = "${data[position].name?:"匿名设备"}\n(${data[position].address})"
+        if (data[position].bondState==BluetoothDevice.BOND_BONDED){
+            holder.binding.deviceName.compoundDrawableTintList = ColorStateList.valueOf(Color.parseColor("#03a9f4"))
+        }else{
+            holder.binding.deviceName.compoundDrawableTintList = ColorStateList.valueOf(Color.GRAY)
+        }
     }
 
     override fun getItemCount(): Int {

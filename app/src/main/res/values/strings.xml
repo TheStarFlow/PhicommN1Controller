@@ -1,4 +1,4 @@
 <resources>
-    <string name="app_name">PhicommN1Controller</string>
+    <string name="app_name">N1遥控器</string>
     <string name="bluetooth_device">蓝牙设备</string>
 </resources>
