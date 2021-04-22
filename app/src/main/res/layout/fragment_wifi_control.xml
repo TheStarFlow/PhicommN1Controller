@@ -56,7 +56,8 @@
             app:layout_constraintBottom_toBottomOf="@id/screenShot"
             app:layout_constraintStart_toEndOf="@id/screenShot"
             app:layout_constraintEnd_toStartOf="@id/setIp"
-            android:onClick="@{()->model.onMute()}"
+            android:layout_marginBottom="20dp"
+            android:onClick="@{()->model.onClick(164)}"
             android:background="?android:attr/selectableItemBackgroundBorderless"
             android:id="@+id/mute"/>
         <ImageView
@@ -69,12 +70,13 @@
             app:layout_constraintEnd_toStartOf="@id/mute"
             android:onClick="@{()->model.onScreenShot()}"
             android:layout_marginBottom="36dp"
+            android:visibility="gone"
             android:background="?android:attr/selectableItemBackgroundBorderless"/>
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/ic_list"
-            app:layout_constraintBottom_toBottomOf="@id/screenShot"
+            app:layout_constraintBottom_toBottomOf="@id/mute"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/mute"
             android:id="@+id/setIp"
@@ -96,7 +98,7 @@
                 android:src="@drawable/ic_ok"
                 android:scaleType="centerInside"
                 android:id="@+id/oK"
-                android:onClick="@{()->model.onCenter()}"
+                android:onClick="@{()->model.onClick(23)}"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -108,12 +110,12 @@
                 android:src="@drawable/arrow_selector"
                 android:padding="6dp"
                 android:background="?android:attr/selectableItemBackgroundBorderless"
-                android:onClick="@{()->model.onLeft()}"
+                android:onClick="@{()->model.onClick(21)}"
                 app:layout_constraintTop_toTopOf="@id/oK"
                 app:layout_constraintBottom_toBottomOf="@id/oK"
                 app:layout_constraintEnd_toStartOf="@id/oK"/>
             <ImageView
-                android:onClick="@{()->model.onUp()}"
+                android:onClick="@{()->model.onClick(19)}"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/arrow_selector"
@@ -124,7 +126,7 @@
                 app:layout_constraintBottom_toTopOf="@id/oK"
                 android:rotation="90"/>
             <ImageView
-                android:onClick="@{()->model.onRight()}"
+                android:onClick="@{()->model.onClick(22)}"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/arrow_selector"
@@ -135,7 +137,7 @@
                 android:rotation="180"
                 android:background="?android:attr/selectableItemBackgroundBorderless"/>
             <ImageView
-                android:onClick="@{()->model.onDown()}"
+                android:onClick="@{()->model.onClick(20)}"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/arrow_selector"
@@ -155,7 +157,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="32dp"
-            android:onClick="@{()->model.onBack()}"
+            android:onClick="@{()->model.onClick(4)}"
             android:padding="12dp"
             android:background="?android:attr/selectableItemBackgroundBorderless"
             android:src="@drawable/ic_back_selector"
@@ -174,7 +176,7 @@
             app:layout_constraintBottom_toBottomOf="@id/imgBack"
             app:layout_constraintEnd_toStartOf="@id/imgBack"
             app:layout_constraintStart_toStartOf="parent"
-            android:onClick="@{()->model.onVDown()}"
+            android:onClick="@{()->model.onClick(25)}"
             />
 
         <ImageView
@@ -187,7 +189,7 @@
             app:layout_constraintBottom_toBottomOf="@id/imgBack"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/imgBack"
-            android:onClick="@{()->model.onVUp()}"
+            android:onClick="@{()->model.onClick(24)}"
             />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

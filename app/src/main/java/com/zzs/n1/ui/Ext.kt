@@ -69,9 +69,9 @@ fun ViewModel.launchIO(bl: suspend () -> Unit) {
 }
 
 fun ViewModel.httpPost(url: String, json: String, onSucceed: (String) -> Unit) {
+    log(url)
+    log(json)
     launchIO {
-        log(url)
-        log(json)
         val conn = initConnection(url, "POST")
         val out = OutputStreamWriter(conn.outputStream, "UTF-8") // utf-8编码
         out.append(json)

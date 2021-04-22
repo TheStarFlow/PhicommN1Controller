@@ -2,8 +2,12 @@ package com.zzs.n1
 
 import android.bluetooth.*
 import android.content.Context
+import android.os.Parcel
+import android.os.VibrationEffect
+import android.os.Vibrator
 import android.text.TextUtils
 import android.util.Log
+import android.view.View
 import androidx.lifecycle.*
 import com.zzs.n1.WifiControlViewModel.Companion.LAST_IP
 import com.zzs.n1.bean.NetBean
@@ -48,9 +52,14 @@ class BluetoothControlViewModel : ViewModel(), BluetoothProfile.ServiceListener,
 
     val device = MutableLiveData<BluetoothDevice>()
 
+    val vibrator:Vibrator = App.application.getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
+
 
     fun power(){
         //关机
+        if (vibrator.hasVibrator()){
+            vibrator.vibrate(VibrationEffect.createOneShot(50,255))
+        }
         val ip = SpHelper.getString(LAST_IP)
         if (!TextUtils.isEmpty(ip)){
             val url = getUrl(ip!!, WifiControlViewModel.KEY_EVENT)
@@ -64,60 +73,13 @@ class BluetoothControlViewModel : ViewModel(), BluetoothProfile.ServiceListener,
         val bl = blAdapter.getRemoteDevice(lastDeviceAddress)
         val gatt = bl?.connectGatt(App.application,false,object : BluetoothGattCallback() {})
         gatt?.close()
-
-
-
     }
 
-    fun onMute() {
-        val code = 0x84.toByte()
-        keyAction(code)
-    }
-
-    fun onScreenShot() {
-        val code = 0x46.toByte()
-        keyAction(code)
-    }
-
-
-    fun onVDown() {
-        val code = 0x86.toByte()
-        keyAction(code)
-    }
-
-    fun onVUp() {
-        val code = 0x85.toByte()
-        keyAction(code)
-    }
-
-    fun onBack() {
-        val code: Byte = 0x29
-        keyAction(code)
-    }
-
-    fun onLeft() {
-        val code: Byte = 0x50
-        keyAction(code)
-    }
-
-    fun onRight() {
-        val code: Byte = 0x4F
-        keyAction(code)
-    }
-
-    fun onUp() {
-        val code: Byte = 0x52
-        keyAction(code)
-    }
-
-    fun onDown() {
-        val code: Byte = 0x51
-        keyAction(code)
-    }
-
-    fun onCenter() {
-        val code: Byte = 0x58
-        keyAction(code)
+    fun onClick(code:Int){
+        if (vibrator.hasVibrator()){
+            vibrator.vibrate(VibrationEffect.createOneShot(50,255))
+        }
+        keyAction(code.toByte())
     }
 
     private fun keyAction(code: Byte) {

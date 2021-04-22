@@ -1,5 +1,8 @@
 package com.zzs.n1
 
+import android.content.Context
+import android.os.VibrationEffect
+import android.os.Vibrator
 import android.text.TextUtils
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -30,61 +33,24 @@ class WifiControlViewModel : ViewModel() {
         const val LAST_IP = "LAST_IP"
     }
 
+    val vibrator: Vibrator = App.application.getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
+
     var ip = ""
 
     val wifiIpEnable = MutableLiveData<Boolean>()
 
-    fun onMute() {
-        postKey(164)
+
+    fun onClick(code:Int){
+        if (vibrator.hasVibrator()){
+            vibrator.vibrate(VibrationEffect.createOneShot(50,255))
+        }
+        postKey(code)
     }
 
     fun onScreenShot() {
         showToast("暂未完成")
     }
-
-    fun onVDown() {
-        postKey(25)
-
-    }
-
-    fun onVUp() {
-        postKey(24)
-
-    }
-
-    fun onBack() {
-        postKey(4)
-    }
-
-    fun onLeft() {
-        postKey(21)
-
-    }
-
-    fun onRight() {
-        postKey(22)
-
-    }
-
-    fun onUp() {
-        postKey(19)
-
-    }
-
-    fun onDown() {
-        postKey(20)
-
-    }
-
-    fun onCenter() {
-        postKey(23)
-
-    }
-
-
     //  http://192.168.123.116:8080/v1/
-
-
 
     fun updateIp(ip: String? = SpHelper.getString(LAST_IP)) {
         wifiIpEnable.value = false
