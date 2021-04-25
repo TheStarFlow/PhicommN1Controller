@@ -12,8 +12,10 @@ import android.view.Window
 import android.view.WindowManager
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import com.zzs.n1.MainViewModel
+import com.zzs.n1.R
 import com.zzs.n1.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
@@ -43,7 +45,8 @@ class MainActivity : AppCompatActivity() {
 
     private fun checkPermission() {
         if (ActivityCompat.checkSelfPermission(this,Manifest.permission.ACCESS_FINE_LOCATION)!=PackageManager.PERMISSION_GRANTED){
-            ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),1001)
+            ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.ACCESS_FINE_LOCATION,Manifest.permission.WRITE_EXTERNAL_STORAGE,
+            Manifest.permission.READ_EXTERNAL_STORAGE),1001)
         }
     }
 
@@ -85,7 +88,7 @@ class MainActivity : AppCompatActivity() {
     private fun fitSystemBar(window: Window) {
         window.apply {
             addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
-            statusBarColor = Color.TRANSPARENT
+            statusBarColor = ContextCompat.getColor(this@MainActivity, R.color.start1)
         }.decorView.apply {
             //View.SYSTEM_UI_FLAG_FULLSCREEN = 4.4系统 WindowManager.LayoutParams.FLAG_FULLSCREEN 会隐藏状态栏
             //布局延伸至状态栏  但是不隐藏

@@ -17,6 +17,20 @@
         xmlns:app="http://schemas.android.com/apk/res-auto"
         >
 
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="12dp"
+            android:src="@drawable/ic_icon_shut_down"
+            app:layout_constraintBottom_toTopOf="@id/mute"
+            android:layout_marginBottom="12dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvState"
+            android:onClick="@{()->model.power()}"
+            android:background="?android:attr/selectableItemBackgroundBorderless"
+            />
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -53,7 +67,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/ic_mute"
-            app:layout_constraintBottom_toBottomOf="@id/screenShot"
+            app:layout_constraintBottom_toTopOf="@id/cMenu"
             app:layout_constraintStart_toEndOf="@id/screenShot"
             app:layout_constraintEnd_toStartOf="@id/setIp"
             android:layout_marginBottom="20dp"
@@ -63,14 +77,14 @@
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/ic_screenshot_line"
+            android:src="@drawable/ic_home_selector"
             android:id="@+id/screenShot"
-            app:layout_constraintBottom_toTopOf="@id/cMenu"
+            android:scaleType="centerInside"
+            app:layout_constraintBottom_toBottomOf="@id/mute"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toStartOf="@id/mute"
-            android:onClick="@{()->model.onScreenShot()}"
-            android:layout_marginBottom="36dp"
-            android:visibility="gone"
+            android:onClick="@{()->model.onClick(3)}"
+            android:visibility="visible"
             android:background="?android:attr/selectableItemBackgroundBorderless"/>
         <ImageView
             android:layout_width="wrap_content"
@@ -95,7 +109,7 @@
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/ic_ok"
+                android:src="@drawable/ok_selector"
                 android:scaleType="centerInside"
                 android:id="@+id/oK"
                 android:onClick="@{()->model.onClick(23)}"
@@ -103,7 +117,7 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                android:background="@drawable/ok_bg_selector"/>
+                android:background="@drawable/ok_bg"/>
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

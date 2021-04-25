@@ -41,8 +41,6 @@ class HidDeviceCallBack(val mHidDevice: BluetoothHidDevice, val mState: StateRep
         if (state == BluetoothHidDevice.STATE_CONNECTED) {
             DataWrapper.mInputReportCache.clear()
             DataWrapper.mOutputReportCache.clear()
-            mBatteryWrapper?.update(mBatteryLevel)
-            mCurrentBatteryLevel = mBatteryLevel
             if (device != mPluginDevice) {
                 mPluginDevice = device
                 initWrapper()
@@ -50,6 +48,8 @@ class HidDeviceCallBack(val mHidDevice: BluetoothHidDevice, val mState: StateRep
                 mKeyBoardWrapper?.mPluginDevice = mPluginDevice
                 mMouseWrapper?.mPluginDevice = mPluginDevice
             }
+            mBatteryWrapper?.update(mBatteryLevel)
+            mCurrentBatteryLevel = mBatteryLevel
             mState.onReportState(mPluginDevice?.name ?: "匿名设备")
         } else {
             DataWrapper.mProtocol = BluetoothHidDevice.PROTOCOL_REPORT_MODE

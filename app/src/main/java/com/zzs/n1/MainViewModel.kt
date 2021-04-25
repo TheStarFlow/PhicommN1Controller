@@ -1,5 +1,6 @@
 package com.zzs.n1
 
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 
 /**
@@ -8,5 +9,4 @@ import androidx.lifecycle.ViewModel
 @describe
  */
 class MainViewModel:ViewModel() {
-
 }

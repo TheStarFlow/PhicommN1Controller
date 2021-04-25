@@ -1,7 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="teal_200">#FF03DAC5</color>
+<!--    main-->
+    <color name="teal_200">#FFFF66</color>
     <color name="black">#FF000000</color>
-    <color name="gray">#666666</color>
-    <color name="lightGray">#444444</color>
+<!--    text-->
+    <color name="gray">#FFFFFF</color>
+<!--    normal-->
+    <color name="lightGray">#CCCCCC</color>
+
+    <color name="start1">#005C95</color>
+    <color name="end1">#363795</color>
 </resources>

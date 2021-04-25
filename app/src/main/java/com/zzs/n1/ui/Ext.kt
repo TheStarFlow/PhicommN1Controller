@@ -61,7 +61,7 @@ fun ViewModel.launchIO(bl: suspend () -> Unit) {
             bl.invoke()
         }.onFailure {
             withContext(Dispatchers.Main) {
-                showToast("网络异常 ${it.message}")
+                showToast("应用异常  ${it.message}")
             }
         }
 

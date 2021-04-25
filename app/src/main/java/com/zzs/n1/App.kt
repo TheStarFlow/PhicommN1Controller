@@ -1,6 +1,7 @@
 package com.zzs.n1
 
 import android.app.Application
+import com.zzs.n1.utils.CrashCollector
 import com.zzs.n1.utils.SpHelper
 
 /**
@@ -17,5 +18,6 @@ class App:Application() {
         super.onCreate()
         application = this
         SpHelper.init(this)
+        CrashCollector.init(this)
     }
 }

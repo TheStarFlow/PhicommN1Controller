@@ -1,5 +1,7 @@
 package com.zzs.n1
 
+import android.bluetooth.BluetoothAdapter
+import android.bluetooth.BluetoothGattCallback
 import android.content.Context
 import android.os.VibrationEffect
 import android.os.Vibrator
@@ -27,6 +29,8 @@ class WifiControlViewModel : ViewModel() {
         value = "未连接"
     }
 
+    val blAdapter: BluetoothAdapter = BluetoothAdapter.getDefaultAdapter()
+
     companion object {
         const val TAG = "WifiControlViewModel"
         const val KEY_EVENT = "keyevent"
@@ -39,6 +43,26 @@ class WifiControlViewModel : ViewModel() {
 
     val wifiIpEnable = MutableLiveData<Boolean>()
 
+
+    fun power(){
+        //关机
+        if (vibrator.hasVibrator()){
+            vibrator.vibrate(VibrationEffect.createOneShot(50,255))
+        }
+        val ip = SpHelper.getString(LAST_IP)
+        if (!TextUtils.isEmpty(ip)){
+            val url = getUrl(ip!!, WifiControlViewModel.KEY_EVENT)
+            val json = NetBean(26).toString()
+            httpPost(url,json){ log(it)}
+        }
+
+        //开机
+        val lastDeviceAddress = SpHelper.getString(BluetoothControlViewModel.LAST_CONTROL)
+        if (TextUtils.isEmpty(lastDeviceAddress))return
+        val bl = blAdapter.getRemoteDevice(lastDeviceAddress)
+        val gatt = bl?.connectGatt(App.application,false,object : BluetoothGattCallback() {})
+        gatt?.close()
+    }
 
     fun onClick(code:Int){
         if (vibrator.hasVibrator()){

@@ -29,7 +29,6 @@ class BluetoothControlViewModel : ViewModel(), BluetoothProfile.ServiceListener,
     companion object {
         const val TAG = "BluetoothControlViewModel"
         const val LAST_CONTROL = "LAST_CONTROL_DEVICE"
-
     }
 
     private val blAdapter = BluetoothAdapter.getDefaultAdapter()
@@ -54,6 +53,21 @@ class BluetoothControlViewModel : ViewModel(), BluetoothProfile.ServiceListener,
 
     val vibrator:Vibrator = App.application.getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
 
+    fun powerLong(){
+        //关机
+        if (vibrator.hasVibrator()){
+            vibrator.vibrate(VibrationEffect.createOneShot(50,255))
+        }
+
+        keyAction(0x66)
+
+        //开机
+        val lastDeviceAddress = SpHelper.getString(LAST_CONTROL)
+        if (TextUtils.isEmpty(lastDeviceAddress))return
+        val bl = blAdapter.getRemoteDevice(lastDeviceAddress)
+        val gatt = bl?.connectGatt(App.application,false,object : BluetoothGattCallback() {})
+        gatt?.close()
+    }
 
     fun power(){
         //关机
@@ -82,10 +96,10 @@ class BluetoothControlViewModel : ViewModel(), BluetoothProfile.ServiceListener,
         keyAction(code.toByte())
     }
 
-    private fun keyAction(code: Byte) {
+    fun keyAction(code: Byte) {
         viewModelScope.launch {
             mHidHandler?.keyDown(code)
-            delay(5)
+            delay(8)
             mHidHandler?.keyUp(code)
         }
     }

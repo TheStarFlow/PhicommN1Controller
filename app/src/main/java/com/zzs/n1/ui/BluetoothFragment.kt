@@ -78,6 +78,14 @@ class BluetoothFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        binding.power.setOnLongClickListener {
+            viewmodel.powerLong()
+            true
+        }
+        binding.oK.setOnLongClickListener {
+            viewmodel.onClick(0x4a)
+            true
+        }
         binding.setIp.setOnClickListener {
             if (listDialog == null) {
                 listDialog = BlueDeviceListDialog.newInstance()
