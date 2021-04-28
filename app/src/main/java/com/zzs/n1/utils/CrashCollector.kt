@@ -11,8 +11,8 @@ import android.os.Looper
 import java.io.*
 import java.text.SimpleDateFormat
 import java.util.*
-import java.util.concurrent.Executor
 import kotlin.collections.HashMap
+import kotlin.system.exitProcess
 
 /**
 @author  zzs
@@ -37,7 +37,7 @@ object CrashCollector : Thread.UncaughtExceptionHandler, Runnable {
 
     override fun uncaughtException(t: Thread, e: Throwable) {
         collectInfo(e)
-        saveCrashInfo()
+        saveCrashInfo(t)
     }
 
     private fun collectInfo(e: Throwable) {
@@ -115,7 +115,7 @@ object CrashCollector : Thread.UncaughtExceptionHandler, Runnable {
     }
 
     @SuppressLint("SimpleDateFormat")
-    private fun saveCrashInfo() {
+    private fun saveCrashInfo(t: Thread) {
         val stringBuffer = StringBuffer()
         stringBuffer.append(exceptionMap[PACKAGE_INFO]).append(System.lineSeparator())
         stringBuffer.append(exceptionMap[SYSTEM_VERSION]).append(System.lineSeparator())
@@ -123,8 +123,9 @@ object CrashCollector : Thread.UncaughtExceptionHandler, Runnable {
         val simpleDateFormat = SimpleDateFormat("yyyyMMddHHmmss")
         val time: String = simpleDateFormat.format(Date())
         val fileName = "CrashLog$time.txt"
-        val fileDir: String = Environment.getExternalStorageDirectory().absolutePath
+        val fileDir: String = sAppContext.externalCacheDir?.absolutePath
                 .toString() + "/${tag}" + "/Log/"
+        stringBuffer.append("===Thread Name===>").append(t.name)
         if (Environment.getExternalStorageState() == Environment.MEDIA_MOUNTED) {
             val file = File(fileDir)
             if (!file.exists()) {
