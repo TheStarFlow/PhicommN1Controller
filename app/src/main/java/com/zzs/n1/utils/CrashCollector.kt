@@ -11,6 +11,7 @@ import android.os.Looper
 import java.io.*
 import java.text.SimpleDateFormat
 import java.util.*
+import java.util.concurrent.Executors
 import kotlin.collections.HashMap
 import kotlin.system.exitProcess
 
@@ -27,6 +28,7 @@ object CrashCollector : Thread.UncaughtExceptionHandler, Runnable {
     private const val tag = "ZZSCrashLog"
     private lateinit var sAppContext: Application
     private val exceptionMap = HashMap<String, String>()
+    private var executors = Executors.newCachedThreadPool()
 
 
     fun init(app: Application) {
@@ -36,8 +38,10 @@ object CrashCollector : Thread.UncaughtExceptionHandler, Runnable {
     }
 
     override fun uncaughtException(t: Thread, e: Throwable) {
-        collectInfo(e)
-        saveCrashInfo(t)
+       executors.execute {
+           collectInfo(e)
+           saveCrashInfo(t)
+       }
     }
 
     private fun collectInfo(e: Throwable) {
@@ -74,11 +78,11 @@ object CrashCollector : Thread.UncaughtExceptionHandler, Runnable {
         val contentMap = HashMap<String, String>()
         try {
             val packageInfo: PackageInfo = packageManager.getPackageInfo(
-                    sAppContext.packageName,
-                    PackageManager.GET_ACTIVITIES
+                sAppContext.packageName,
+                PackageManager.GET_ACTIVITIES
             )
             val versionName =
-                    if (packageInfo.versionName == null) "null" else packageInfo.versionName
+                if (packageInfo.versionName == null) "null" else packageInfo.versionName
             val versionCode: String = packageInfo.longVersionCode.toString() + ""
             contentMap["VERSION_NAME"] = versionName
             contentMap["VERSION_CODE"] = versionCode
@@ -92,22 +96,22 @@ object CrashCollector : Thread.UncaughtExceptionHandler, Runnable {
         val versionInfo = StringBuffer()
         versionInfo.append("\n\n")
         versionInfo.append(
-                """
+            """
             手机型号：${Build.MODEL}
             """.trimIndent()
         )
         versionInfo.append(
-                """
+            """
             SDK版本：${Build.VERSION.SDK_INT}
             """.trimIndent()
         )
         versionInfo.append(
-                """
+            """
             系统版本${Build.VERSION.RELEASE}
             """.trimIndent()
         )
         versionInfo.append(
-                """
+            """
             手机制造商：${Build.MANUFACTURER}
             """.trimIndent()
         )
@@ -124,7 +128,7 @@ object CrashCollector : Thread.UncaughtExceptionHandler, Runnable {
         val time: String = simpleDateFormat.format(Date())
         val fileName = "CrashLog$time.txt"
         val fileDir: String = sAppContext.externalCacheDir?.absolutePath
-                .toString() + "/${tag}" + "/Log/"
+            .toString() + "/${tag}" + "/Log/"
         stringBuffer.append("===Thread Name===>").append(t.name)
         if (Environment.getExternalStorageState() == Environment.MEDIA_MOUNTED) {
             val file = File(fileDir)

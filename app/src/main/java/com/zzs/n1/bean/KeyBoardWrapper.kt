@@ -39,9 +39,9 @@ class KeyBoardWrapper(mHidDevice: BluetoothHidDevice?, mPluginDevice: BluetoothD
     fun keyDown(key: Byte) {
         if (key >= MODIFIER_BASE && key <= MODIFIER_BASE + MODIFIER_COUNT) {
             mBuffer[0] =
-                mBuffer[0] or ((1 shl key - MODIFIER_BASE).toByte())
+                mBuffer[0] or (1 shl (key - MODIFIER_BASE)).toByte()
         } else if (key and 0x80.toByte() != 0.toByte()) {
-            mBuffer[1] = mBuffer[1] or ((1 shl ((key and 0x07).toInt())).toByte())
+            mBuffer[1] = mBuffer[1] or (1 shl (key and 0x07).toInt()).toByte()
         } else {
             for (i in 2..7) {
                 if (mBuffer[i] == 0x00.toByte()) {
@@ -59,8 +59,7 @@ class KeyBoardWrapper(mHidDevice: BluetoothHidDevice?, mPluginDevice: BluetoothD
     fun keyUp(key: Byte) {
         if (key >= MODIFIER_BASE && key <= MODIFIER_BASE + MODIFIER_COUNT) {
             mBuffer[0] =
-                mBuffer[0] and (1 shl key - MODIFIER_BASE).inv()
-                    .toByte()
+                mBuffer[0] and (1 shl (key - MODIFIER_BASE)).inv().toByte()
         } else if (key and 0x80.toByte() != 0.toByte()) {
             mBuffer[1] = mBuffer[1] and (1 shl (key and 0x07).toInt()).inv().toByte()
         } else {
